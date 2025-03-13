@@ -22,17 +22,17 @@ public class SecurityConfig {
 //                )
 //                .httpBasic(withDefaults());
 //        return http.build();
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-            .csrf(csrf -> csrf.disable())  // ✅ Correct way to disable CSRF in Spring Security 6.1+
-            .authorizeHttpRequests(auth -> auth
-                    .anyRequest().permitAll()  // ✅ Allow all requests
-            )
-            .httpBasic(withDefaults());  // Keep basic auth if needed
-
-    return http.build();
-}
+//@Bean
+//public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    http
+//            .csrf(csrf -> csrf.disable())  // ✅ Correct way to disable CSRF in Spring Security 6.1+
+//            .authorizeHttpRequests(auth -> auth
+//                    .anyRequest().permitAll()  // ✅ Allow all requests
+//            )
+//            .httpBasic(withDefaults());  // Keep basic auth if needed
+//
+//    return http.build();
+//}
 
 
 }
