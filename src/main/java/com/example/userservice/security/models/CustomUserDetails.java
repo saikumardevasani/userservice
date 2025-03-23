@@ -2,13 +2,20 @@ package com.example.userservice.security.models;
 
 import com.example.userservice.models.Role;
 import com.example.userservice.models.User;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Getter
+@Setter
+@JsonDeserialize
 //
 public class CustomUserDetails implements UserDetails {
 
@@ -18,7 +25,12 @@ public class CustomUserDetails implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
-    List<CustomGrantedAuthority> grantedAuthorities;
+    List<CustomGrantedAuthority> authorities;
+
+    public CustomUserDetails(){
+
+    }
+
 
     public CustomUserDetails(User user){
         this.username = user.getEmail();
@@ -29,15 +41,15 @@ public class CustomUserDetails implements UserDetails {
         this.enabled= true;
 
         //In the granted authorities, we need to add the roles of the user
-        this.grantedAuthorities = new ArrayList<>();
+        this.authorities = new ArrayList<>();
         for(Role role : user.getRoles()){
-            grantedAuthorities.add(new CustomGrantedAuthority(role));
+                authorities.add(new CustomGrantedAuthority(role));
         }
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return grantedAuthorities;
+        return authorities;
     }
 
     @Override
